@@ -54,16 +54,17 @@ For $\\alpha < 1$: $\\:\\:\\: \\sum_{i=0}^\\infty \\alpha^i  < \\frac{1}{1-\\alp
 
 - $T(n)=T(n-1)+2$
 
-    - this goes from n to 1 with constant work of 2 at each level so the T(n) = 2*n = O(n)
+    - this goes from n to 1 with constant the work of 2 at each level so the T(n) = 2*n = O(n)
 
 
 - $T(n)= T(n-1)+n^c$, with $c\geq 1$
 
-    - this goes from n to 1 with work of $(n - i)^c$ at i'th level. Each element is less than $n ^c$ (when n, c $\geq$ 1) and we have total of n element to sum up which mean $T(n) \leq n * n ^c = n^ {c+1} = O(n^ {c+1})$
+    - this goes from n to 1 with the work of $(n - i)^c$ at i'th level. Each element is less than $n ^c$ (when n, c $\geq$ 1) and we have total of n element to sum up which mean $T(n) \leq n * n ^c = n^ {c+1} = O(n^ {c+1})$
 
 
 - $T(n)=T(\sqrt{n})+1$
 
+    - this goes from n to $\sqrt{n}$ with the constant work of 1 at each level. so the number of levels is equal to the total work which mean how fast ${{{{n}^{1/2}}^{1/2}}^{...}}$ goes to one which gives us O($log{_2}{log{_2}{n}}$)
 
 
 
