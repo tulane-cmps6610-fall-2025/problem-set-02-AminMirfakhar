@@ -70,16 +70,55 @@ For $\\alpha < 1$: $\\:\\:\\: \\sum_{i=0}^\\infty \\alpha^i  < \\frac{1}{1-\\alp
 
 3. **Algorithm Selection**
 
+- Algorithm $\mathcal{A}$ solves problems by dividing them into
+      two subproblems of one fifth of the input size, recursively
+      solving each subproblem, and then combining the solutions in quadratic time.
+
+    - $W(n) = 2W(n/5) + n^2 \to W(n) = 4W(n/25) + 2 * (n/5)^2 + n^2$
+ so at each level work would be less than the previous one that tells us this is a root dominant function whit the 
+ $W(n) \in O(n^2)$.
+ 
+    - $S(n) = S(n/5) + n^2 \to S(n) = S(n/25) + (n/5)^2 + n^2$
+ so at each level span would be less than the previous one that tells us this is a root dominant function whit the 
+ $S(n) \in O(n^2)$.
+
+- Algorithm $\mathcal{B}$ solves problems of size $n$ by
+      recursively one subproblems of size $n-1$ and then
+      combining the solutions in logarithmic time.
+
+   - $W(n) = W(n-1) + log(n) \to W(n) = 4W(n-2) + log(n-1) * log(n)$
+ since this goes over the all elements so we would have n term each less than or equal to log(n) so the total work of function is 
+ $W(n) \in O(n log(n))$. 
+ 
+    - Also we don't have any recursion to use parallelism so span is as same as work
+ $S(n) \in O(n log(n))$.
+
+- Algorithm $\mathcal{C}$ solves problems of size $n$ by dividing
+      them into a subproblems of size $n/3$ and a subproblem of size
+      $2n/3$, recursively solving each subproblem, and then combining
+      the solutions in $O(n^{1.1})$ time.
+
+    - $W(n) = W(n/3) + W(2n/3) + O(n^{1.1}) \to W(n) = W(n/9) + W(2n/9) + (n/3)^{1.1} + W(2n/9) + W(4n/9) + (2n/3)^{1.1} + n^{1.1}$ base on the multiplier we can say
+ $(n/3)^{1.1} + (2n/3)^{1.1} \leq n^{1.1}$.
+ so the function is root dominated
+ $W(n) \in O(n^{1.1})$.
+ 
+    - $S(n) = Max{S(n/3),  S(2n/3)} + O(n^{1.1}) \to S(n) = S(2n/3) + O(n^{1.1})$ this is a root dominant function as well,
+ $S(n) \in O(n^{1.1})$.
 
 
-4. **More Algorithm Selection** 
+- Which algorithm would you choose? Why?
+    - based on the order of functions work and span, it is better to use B since the $W{_B} < W{_C} < W{_A}$ and $S{_B} < S{_C} < S{_A}$.
+
+
+3. **More Algorithm Selection** 
 
 
 
  
-5. **Integer Multiplication Timing Results**
+4. **Integer Multiplication Timing Results**
 
 
 
 
-6. **Black Hats and White Hats**
+5. **Black Hats and White Hats**
