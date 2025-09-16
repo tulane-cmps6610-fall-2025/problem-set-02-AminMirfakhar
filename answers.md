@@ -15,7 +15,7 @@ For $\\alpha < 1$: $\\:\\:\\: \\sum_{i=0}^\\infty \\alpha^i  < \\frac{1}{1-\\alp
 - e.g., $\\sum_{i=0}^{\\lg n} \\frac{1}{2^i} < 2$,
 
 
-
+##
 
 1. **Asymptotic notation**
  - Prove that $\log n! \in \Theta(n \log n):$
