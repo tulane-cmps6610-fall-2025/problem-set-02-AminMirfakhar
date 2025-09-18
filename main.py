@@ -54,8 +54,7 @@ def quadratic_multiply(x: BinaryNumber, y: BinaryNumber):
 
 
 def subquadratic_multiply(x: BinaryNumber, y: BinaryNumber):
-    
-    if x.decimal_val < 10 or y.decimal_val < 10:
+    if len(x.binary_vec) == 1 and len(y.binary_vec) == 1:
         return BinaryNumber(x.decimal_val * y.decimal_val)
 
     X, Y = pad(x.binary_vec, y.binary_vec)
@@ -66,8 +65,10 @@ def subquadratic_multiply(x: BinaryNumber, y: BinaryNumber):
 
     xLyL = subquadratic_multiply(xL, yL)
     xRyR = subquadratic_multiply(xR, yR)
-    xLxR_yLyR = subquadratic_multiply(BinaryNumber(xL.decimal_val + xR.decimal_val),
-                                  BinaryNumber(yL.decimal_val + yR.decimal_val))
+    xLxR_yLyR = subquadratic_multiply(
+        BinaryNumber(xL.decimal_val + xR.decimal_val),
+        BinaryNumber(yL.decimal_val + yR.decimal_val)
+    )
 
     xLyR_xRyL = xLxR_yLyR.decimal_val - xLyL.decimal_val - xRyR.decimal_val
 
@@ -76,16 +77,19 @@ def subquadratic_multiply(x: BinaryNumber, y: BinaryNumber):
     return BinaryNumber(result_val)
 
 
+
 ## Feel free to add your own tests here.
 def test_multiply():
-    assert binary2int(quadratic_multiply(BinaryNumber(2), BinaryNumber(2))) == 2*2
+    assert quadratic_multiply(BinaryNumber(2), BinaryNumber(2)).decimal_val == 2*2
+    print(subquadratic_multiply(BinaryNumber(2), BinaryNumber(2)))
+    # assert subquadratic_multiply(BinaryNumber(2), BinaryNumber(2))
 
 # some timing functions here that will make comparisons easy    
 def time_multiply(x, y, f):
-    start = time.time()
+    start = time.perf_counter()
     # multiply two numbers x, y using function f
     f(x,y)
-    return (time.time() - start)*1000
+    return (time.perf_counter() - start)*1000
     
 def compare_multiply():
     res = []
@@ -107,4 +111,5 @@ def print_results(results):
 
     
 if __name__ == '__main__':
+    test_multiply()
     compare_multiply()
