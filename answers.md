@@ -76,7 +76,7 @@ For $\\alpha < 1$: $\\:\\:\\: \\sum_{i=0}^\\infty \\alpha^i  < \\frac{1}{1-\\alp
 
     - this goes from n to $\sqrt{n}$ with the constant work of 1 at each level. so the number of levels is equal to the total work which mean how fast ${{{{n}^{1/2}}^{1/2}}^{...}}$ goes to one which gives us O($log{_2}{log{_2}{n}}$)
 
-
+---
 
 3. **Algorithm Selection**
 
@@ -121,7 +121,7 @@ $1/3  + 2/3  = 1$
 
 - Which algorithm would you choose? Why?
     - based on the order of functions work and span, it is better to use B since the $W{_B} < W{_C} < W{_A}$ and $S{_B} < S{_C} < S{_A}$.
-
+---
 
 4. **More Algorithm Selection** 
 
@@ -165,17 +165,46 @@ $1/3  + 2/3  = 1$
 
 - Which algorithm would you choose? Why?
 
-    - based on the order of functions work and span, $W{_C} < W{_A} < W{_B}$ and $S{_A} = S{_B} < S{_C}$ so if we want to select algorithms base on their work, C would be our candidate but if focus on span A would be better to use (since B has bigger order of work).
+    - based on the order of functions work and span, $W{_C} < W{_A} < W{_B}$ and $S{_A} = S{_B} < S{_C}$, if we want to select the efficient algorithm base on their work, C would be our candidate but if we focus on the span, A would be better to use (since B has bigger order of work).
 
 
-
+---
  
 5. **Integer Multiplication Timing Results**
+    -  In contrast with theory, it takes more time for the subquadratic
+      $(O(n^{1.585}))$
+       multiplication compare with the quadratic one
+       $(O(n^{2}))$.
+       Probably because of python over loads and internal functions that make rhe quadratic one more efficient than recursively calculating the multiplication.
+ 
+![TimeComparison](./TimeComparison.jpg "TimeComparison")
 
 
 
-
-
-
+---
 
 6. **Black Hats and White Hats**
+
+- *6a.* Show that if more than $n/2$ students are black hats, you cannot determine which students are white hats based on a pairwise test. Note that you must assume the black hats are conspiring to fool you.
+
+ 
+  - In this case most of answer pairs only imply that *at least one is black*. since black hats are more in number, they can always trick us to keep at least two labellings of white/black consistent with every other answer pair. so there could be no algorithm to identify the white hats.
+
+ - *6b.* Consider the problem of finding a single white hat, assuming strictly more than $n/2$ of the students are white hats. Show that $n/2$ pairwise interviews is enough to reduce the problem size by a constant fraction. 
+
+
+   - In this case When whites are more in numbers, if we check each pair-answers:
+   - If both say “white,” keep one.
+   - Otherwise, toss both.
+Each round uses about n/2 interviews and leaves at most n/2 people which still has a white majority. so if we keep to that we can find a white had at last and base on it's answer we can find out about others as well.
+
+---
+
+- *6c.* Using the above show that all white hats can be identified using $\Theta(n)$ pairwise interviews.
+  - since we keep half of the people at each step we will end up with (n/2) number of people we started with. so it take log n until we reach the final people. in this way we have
+     $\frac{n}{2^i}$ pair to question which shows O(n) in total.
+     $T(n) = O(n) + (n-1)$
+
+
+
+
