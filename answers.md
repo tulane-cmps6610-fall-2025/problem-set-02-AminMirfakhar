@@ -6,7 +6,7 @@
 
 Place all written answers from `assignment-01.md` here for easier grading.
 
-To solve these, we'll make use of bounds for **geometric series**,
+To solve these, we'll make use of bounds for **geometric series**, **logarithmic Properties**
 
 For $\\alpha > 1$: $\\:\\:\\: \\sum_{i=0}^n \\alpha^i  = \\frac{\\alpha}{\\alpha - 1}\\cdot\\alpha^n$
  - e.g., $\\sum_{i=0}^{\\lg n} 2^i < \\frac{2}{1} * 2^{\\lg n} = 2n$,
@@ -14,6 +14,12 @@ For $\\alpha > 1$: $\\:\\:\\: \\sum_{i=0}^n \\alpha^i  = \\frac{\\alpha}{\\alpha
 For $\\alpha < 1$: $\\:\\:\\: \\sum_{i=0}^\\infty \\alpha^i  < \\frac{1}{1-\\alpha}$,
 - e.g., $\\sum_{i=0}^{\\lg n} \\frac{1}{2^i} < 2$,
 
+
+1 - $\log {a * b} = \log {a} + \log{b}$ 
+- e.g., $\log {n!} =\log n +\log (n-1) +\log (n-2) + ... +\log 1 = \sum_{i=0}^{n} \log {i} $
+
+2 - $\log {a ^ b} = b \log {a}$
+- e.g., $\log {n^n} = n \log{n}$
 
 ##
 
@@ -49,12 +55,16 @@ For $\\alpha < 1$: $\\:\\:\\: \\sum_{i=0}^\\infty \\alpha^i  < \\frac{1}{1-\\alp
 
 - $T(n)=49T(n/25)+n^{3/2}\log n$
 
+   - if we go one layer down on the tree we have $T(n)=49T(n/25)+n^{3/2}\log n,  $T(n/25)=49T(n/256)+{n/25}^{3/2}\log {n/25} \to T(n)=49(49T(n/256)+{n/25}^{3/2}\log {n/25})+n^{3/2}\log n$
+     so it is equal to
+     $49^{i} (n/25^i)^{3/2} (\log {n} - i \log{25})$
+     which shows that this is a root dominant function and we can say $T(n) = O(n^{3/2}\log n)$.
 
 
 
 - $T(n)=T(n-1)+2$
 
-    - this goes from n to 1 with constant the work of 2 at each level so the T(n) = 2*n = O(n)
+    - this goes from n to 1 with constant the work of 2 at each level so it takes linear order, the T(n) = 2*n = O(n)
 
 
 - $T(n)= T(n-1)+n^c$, with $c\geq 1$
@@ -75,11 +85,11 @@ For $\\alpha < 1$: $\\:\\:\\: \\sum_{i=0}^\\infty \\alpha^i  < \\frac{1}{1-\\alp
       solving each subproblem, and then combining the solutions in quadratic time.
 
     - $W(n) = 2W(n/5) + n^2 \to W(n) = 4W(n/25) + 2 * (n/5)^2 + n^2$
- so at each level work would be less than the previous one that tells us this is a root dominant function whit the 
+ so at each level work would be less than the previous one that tells us this is a root dominant function with the 
  $W(n) \in O(n^2)$.
  
     - $S(n) = S(n/5) + n^2 \to S(n) = S(n/25) + (n/5)^2 + n^2$
- so at each level span would be less than the previous one that tells us this is a root dominant function whit the 
+ so at each level span would be less than the previous one that tells us this is a root dominant function with the 
  $S(n) \in O(n^2)$.
 
 - Algorithm $\mathcal{B}$ solves problems of size $n$ by
@@ -100,10 +110,12 @@ For $\\alpha < 1$: $\\:\\:\\: \\sum_{i=0}^\\infty \\alpha^i  < \\frac{1}{1-\\alp
 
     - $W(n) = W(n/3) + W(2n/3) + O(n^{1.1}) \to W(n) = W(n/9) + W(2n/9) + (n/3)^{1.1} + W(2n/9) + W(4n/9) + (2n/3)^{1.1} + n^{1.1}$ base on the multiplier we can say
  $(n/3)^{1.1} + (2n/3)^{1.1} \leq n^{1.1}$.
+since each one is less than one and the power is greater than one and
+$1/3  + 2/3  = 1$
  so the function is root dominated
  $W(n) \in O(n^{1.1})$.
  
-    - $S(n) = Max{S(n/3),  S(2n/3)} + O(n^{1.1}) \to S(n) = S(2n/3) + O(n^{1.1})$ this is a root dominant function as well,
+    - $S(n) = Max(S(n/3),  S(2n/3)) + O(n^{1.1}) \to S(n) = S(2n/3) + O(n^{1.1})$ this is a root dominant function as well,
  $S(n) \in O(n^{1.1})$.
 
 
@@ -111,14 +123,59 @@ For $\\alpha < 1$: $\\:\\:\\: \\sum_{i=0}^\\infty \\alpha^i  < \\frac{1}{1-\\alp
     - based on the order of functions work and span, it is better to use B since the $W{_B} < W{_C} < W{_A}$ and $S{_B} < S{_C} < S{_A}$.
 
 
-3. **More Algorithm Selection** 
+4. **More Algorithm Selection** 
+
+- Algorithm $\mathcal{A}$ solves problems by dividing them into
+      five subproblems of half the size, recursively solving each
+      subproblem, and then combining the solutions in linear time.
+
+    - $W(n) = 5W(n/2) + n \to W(n) = 25W(n/4) + 5n/2 + n$
+ so at each level work would be greater than the previous one that tells us this is a leaf dominant function with the 
+ $W(n) \in O(n ^ {lg{_2}{5}})$.
+ 
+    - $S(n) = S(n/2) + n \to S(n) = S(n/4) + (n/2) + n$
+ so at each level span would be less than the previous one that tells us this is a root dominant function with the 
+ $S(n) \in O(n)$.
+
+  
+	  
+- Algorithm $\mathcal{B}$ solves problems of size $n$ by
+      recursively solving two subproblems of size $n-1$ and then
+      combining the solutions in constant time.
+
+  
+ - $W(n) = 2W(n-1) + c \to W(n) = 4W(n-2) + 2c + c \to \sum_{i=0}^{n-1} 2^i = 2 * 2^{n-1}$
+ so the total work of function is 
+ $W(n) \in O(2^{n})$. 
+ 
+    - $S(n) = S(n-1) + c$  since this goes over the all elements (n) with constant cost of c so, $S(n) = O(n)$
+
+  
+		
+- Algorithm $\mathcal{C}$ solves problems of size $n$ by dividing
+      them into nine subproblems of size $n/3$, recursively solving
+      each subproblem, and then combining the solutions in $O(n^2)$
+      time.
+
+   - $W(n) = 9W(n/3) + n^2 \to W(n) = 81W(n/9) + 9 * {(n/3)}^2 + n^2$ so the cost is balanced and equal to $n^2$ at each level and we have $\log {_3}{n}$ so $W(n) \in O(n^2 \log n)$. 
+
+   - $S(n) = S(n/3) + n^2 \to S(n) = S(n/9) + {(n/3)}^2 + n^2$ so the cost is reducing at each level by factor of (1/9) then it is root dominant and
+     $S(n) = O(n^2)$. 
+
+
+- Which algorithm would you choose? Why?
+
+    - based on the order of functions work and span, $W{_C} < W{_A} < W{_B}$ and $S{_A} = S{_B} < S{_C}$ so if we want to select algorithms base on their work, C would be our candidate but if focus on span A would be better to use (since B has bigger order of work).
 
 
 
  
-4. **Integer Multiplication Timing Results**
+5. **Integer Multiplication Timing Results**
 
 
 
 
-5. **Black Hats and White Hats**
+
+
+
+6. **Black Hats and White Hats**
