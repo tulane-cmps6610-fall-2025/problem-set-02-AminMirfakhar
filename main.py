@@ -3,6 +3,7 @@ CMPS 6610  Problem Set 2
 See problemset-02.pdf for details.
 """
 import time
+import tabulate
 
 class BinaryNumber:
     """ done """
@@ -11,7 +12,7 @@ class BinaryNumber:
         self.binary_vec = list('{0:b}'.format(n)) 
         
     def __repr__(self):
-        return('decimal=%d binary=%s' % (self.decimal_val, ''.join(self.binary_vec))
+        return('decimal=%d binary=%s' % (self.decimal_val, ''.join(self.binary_vec)))
     
 
 ## Implement multiplication functions here. Note that you will have to
@@ -43,15 +44,37 @@ def pad(x,y):
         y = ['0'] + y
     return x,y
     
-def quadratic_multiply(x, y):
-    ### TODO
-    pass
-    ###
+def quadratic_multiply(x: BinaryNumber, y: BinaryNumber):
 
-def subquadratic_multiply(x, y):
-    ### TODO
-    pass
-    ###
+    result_val = 0
+    for i, bit in enumerate(reversed(y.binary_vec)):
+        if bit == '1':
+            result_val += x.decimal_val << i
+    return BinaryNumber(result_val)
+
+
+def subquadratic_multiply(x: BinaryNumber, y: BinaryNumber):
+    
+    if x.decimal_val < 10 or y.decimal_val < 10:
+        return BinaryNumber(x.decimal_val * y.decimal_val)
+
+    X, Y = pad(x.binary_vec, y.binary_vec)
+    n = len(X)
+
+    xL, xR = split_number(X)
+    yL, yR = split_number(Y)
+
+    xLyL = subquadratic_multiply(xL, yL)
+    xRyR = subquadratic_multiply(xR, yR)
+    xLxR_yLyR = subquadratic_multiply(BinaryNumber(xL.decimal_val + xR.decimal_val),
+                                  BinaryNumber(yL.decimal_val + yR.decimal_val))
+
+    xLyR_xRyL = xLxR_yLyR.decimal_val - xLyL.decimal_val - xRyR.decimal_val
+
+    m = n // 2
+    result_val = (xLyL.decimal_val << (2*m)) + (xLyR_xRyL << m) + xRyR.decimal_val
+    return BinaryNumber(result_val)
+
 
 ## Feel free to add your own tests here.
 def test_multiply():
@@ -79,8 +102,9 @@ def print_results(results):
         tabulate.tabulate(
             results,
             headers=['n', 'quadratic', 'subquadratic'],
-            floatfmt=".3f",
+            floatfmt=".2f",
             tablefmt="github"))
-    
-    
 
+    
+if __name__ == '__main__':
+    compare_multiply()
